@@ -44,6 +44,18 @@
       scene.scrollHeight = scene.heightNum * window.innerHeight;
       scene.objs.container.style.height = `${scene.scrollHeight}px`;
     });
+
+    yOffset = window.pageYOffset;
+    let totalScrollHeight = 0;
+    for (let i = 0; i < sceneInfo.length; i++) {
+      totalScrollHeight += sceneInfo[i].scrollHeight;
+      if (totalScrollHeight >= yOffset) {
+        currentScene = i;
+        break;
+      }
+    }
+
+    document.body.setAttribute('id', `show-scene-${currentScene}`);
   };
 
   const scrollLoop = () => {
@@ -62,14 +74,13 @@
       currentScene--;
     }
 
-    console.log(currentScene);
+    document.body.setAttribute('id', `show-scene-${currentScene}`);
   };
 
-  window.addEventListener('resize', setLayout);
   window.addEventListener('scroll', () => {
     yOffset = window.pageYOffset;
     scrollLoop();
   });
-
-  setLayout();
+  window.addEventListener('resize', setLayout);
+  window.addEventListener('load', setLayout);
 })();
