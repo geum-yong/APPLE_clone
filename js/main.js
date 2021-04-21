@@ -10,10 +10,10 @@
       scrollHeight: 0,
       objs: {
         container: document.querySelector('#scroll-section-0'),
-        messageA: document.querySelector('#scroll-section-0 .main-messagae.a'),
-        messageB: document.querySelector('#scroll-section-0 .main-messagae.b'),
-        messageC: document.querySelector('#scroll-section-0 .main-messagae.c'),
-        messageD: document.querySelector('#scroll-section-0 .main-messagae.d'),
+        messageA: document.querySelector('#scroll-section-0 .main-message.a'),
+        messageB: document.querySelector('#scroll-section-0 .main-message.b'),
+        messageC: document.querySelector('#scroll-section-0 .main-message.c'),
+        messageD: document.querySelector('#scroll-section-0 .main-message.d'),
       },
       values: {
         messageA_opacity: [0, 1],
@@ -65,7 +65,15 @@
     document.body.setAttribute('id', `show-scene-${currentScene}`);
   };
 
-  const calcValues = (values, currentYOffset) => {};
+  const calcValues = (values, currentYOffset) => {
+    let rv;
+
+    // 현재 씬에서 스크롤된 범위 비율
+    let scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight;
+    rv = scrollRatio * (values[1] - values[0]) + values[0];
+
+    return rv;
+  };
 
   const playAnimation = () => {
     const objs = sceneInfo[currentScene].objs;
@@ -75,9 +83,11 @@
     switch (currentScene) {
       case 0:
         // console.log('0 play');
-        let messageA_opacity_0 = values.messageA_opacity[0];
-        let messageA_opacity_1 = values.messageA_opacity[1];
-        console.log(calcValues(values, currentYOffset));
+        let messageA_opacity_in = calcValues(
+          values.messageA_opacity,
+          currentYOffset
+        );
+        objs.messageA.style.opacity = messageA_opacity_in;
         break;
 
       case 1:
