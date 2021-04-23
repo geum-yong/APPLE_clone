@@ -68,6 +68,7 @@ a {
 
 .scroll-section {
   padding-top: 50vh;
+  border: 2px solid red;
 }
 
 #scroll-section-0 h1 {
