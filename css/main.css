@@ -208,7 +208,6 @@ a {
 .image-blend-canvas.sticky {
   position: fixed;
   top: 0;
-  z-index: 10;
 }
 
 @media (min-width: 1024px) {
